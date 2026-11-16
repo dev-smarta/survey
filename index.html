@@ -3,83 +3,144 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f5c4d">
+<meta name="theme-color" content="#262b33">
 <meta name="robots" content="noindex,nofollow">
 <title>سمارتا — البحث الميداني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
 <style>
-:root{--bg:#f4f6f5;--card:#fff;--ink:#16211e;--quiet:#5d6b67;--line:#dfe5e3;--brand:#0f5c4d;--brand-2:#e6f0ed;--ok:#1d7a46;--warn:#9a6400;--bad:#b3261e;--r:14px}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1513;--card:#18201d;--ink:#e8eeec;--quiet:#9aa8a3;--line:#2a3532;--brand:#4fb39b;--brand-2:#1d2d28;--ok:#5cc08a;--warn:#e0a948;--bad:#f08b83}}
+/* هوية سمارتا: فحمي داكن + فيروزي + Cairo */
+:root{
+  --nav:#262b33; --nav2:#343a40; --brand:#4a7f93; --brand-d:#3d6b7d; --accent:#5aa9c4; --tint:#e8f2f5;
+  --bg:#eef1f4; --card:#fff; --ink:#1f2733; --ink2:#3f4a58; --quiet:#6c7787; --line:#dde3e9;
+  --ok:#1f9d6b; --ok-bg:#e3f7ee; --warn:#8a6200; --warn-bg:#fdf4e0; --bad:#b93232; --bad-bg:#fdeaea;
+  --f:'Cairo',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif; --r:10px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --nav:#0c0f13; --nav2:#161a20; --brand:#5a95ab; --brand-d:#4a7f93; --accent:#6fbbd5; --tint:#18262c;
+  --bg:#11151b; --card:#191e26; --ink:#e6eaf0; --ink2:#c1c9d4; --quiet:#8c97a6; --line:#2a313c;
+  --ok:#6fd3a6; --ok-bg:#123527; --warn:#f0c766; --warn-bg:#3a2e10; --bad:#f19a9a; --bad-bg:#3a1a1c; color-scheme:dark}}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
-header{background:var(--brand);color:#fff;padding:18px 16px 16px}
-header h1{margin:0;font-size:20px}
-header p{margin:4px 0 0;opacity:.85;font-size:14px}
-main{max-width:560px;margin:0 auto;padding:16px 16px 120px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
-label.t{display:block;font-weight:700;margin-bottom:8px}
-label.t small{font-weight:400;color:var(--quiet)}
-input[type=text],input[type=url],select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
-input:focus,select:focus{outline:2px solid var(--brand);outline-offset:1px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font:inherit;font-weight:700;padding:14px;border-radius:12px;border:1px solid var(--brand);background:var(--brand-2);color:var(--brand);cursor:pointer}
-.btn.main{background:var(--brand);color:#fff;font-size:18px}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+header{background:var(--nav);color:#fff;border-bottom:3px solid var(--accent);padding:calc(14px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 18px max(16px,env(safe-area-inset-left))}
+.hw{max-width:560px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{font-weight:800;letter-spacing:3px;font-size:19px;direction:ltr}
+.co{font-size:11.5px;opacity:.65;border-inline-start:1px solid rgba(255,255,255,.25);padding-inline-start:10px;line-height:1.3}
+header h1{margin:14px 0 0;font-size:22px;font-weight:800;line-height:1.35}
+header p{margin:2px 0 0;font-size:14px;opacity:.75}
+main{max-width:560px;margin:0 auto;padding:14px max(16px,env(safe-area-inset-right)) 130px max(16px,env(safe-area-inset-left))}
+.card{background:var(--card);border-radius:var(--r);box-shadow:0 1px 3px rgba(20,30,50,.1);margin-bottom:12px;overflow:hidden}
+.ch{display:flex;align-items:center;gap:10px;padding:12px 14px 0}
+.num{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+.ch h2{margin:0;font-size:16px;font-weight:700}
+.ch .opt{margin-inline-start:auto;font-size:12px;font-weight:700;color:var(--quiet);background:var(--bg);border-radius:20px;padding:1px 10px}
+.cb{padding:10px 14px 14px}
+input[type=text],input[type=url],select{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-weight:700;padding:13px;border-radius:8px;border:1.5px dashed var(--brand);background:var(--tint);color:var(--brand-d);cursor:pointer}
+.btn svg{width:20px;height:20px}
 .btn:disabled{opacity:.5}
+.lnk{background:none;border:0;padding:0;color:var(--brand-d);font-weight:700;font-size:14px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+@media (prefers-color-scheme:dark){.btn,.lnk{color:var(--accent)}}
 .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.photos div{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg)}
-.photos img{width:100%;height:100%;object-fit:cover}
-.photos button{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:16px;line-height:28px}
-.st{font-size:14px;margin-top:8px;color:var(--quiet)}
-.st.ok{color:var(--ok)} .st.warn{color:var(--warn)} .st.bad{color:var(--bad)}
-.row{display:flex;gap:8px;align-items:center}
-.row a{color:var(--brand);font-size:14px;white-space:nowrap}
-.alt{margin-top:10px;display:none}
-.foot{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
-.foot .btn{max-width:528px;margin:0 auto}
-.msg{border-radius:var(--r);padding:16px;margin-bottom:12px;display:none}
-.msg.ok{display:block;background:var(--brand-2);border:1px solid var(--ok)}
-.msg.bad{display:block;background:var(--card);border:1px solid var(--bad);color:var(--bad)}
+.photos:empty{display:none}
+.photos div{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--bg)}
+.photos img{width:100%;height:100%;object-fit:cover;display:block}
+.photos button{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:17px;line-height:28px;padding:0}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:8px;padding:4px;gap:4px}
+.seg button{border:0;background:none;border-radius:6px;padding:9px 6px;font-weight:700;font-size:14px;color:var(--quiet);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.seg button svg{width:17px;height:17px;flex:none}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(20,30,50,.15)}
+.pane{margin-top:12px}
+.st{font-size:14px;color:var(--quiet);display:flex;align-items:center;gap:8px}
+.st::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
+.st.ok{color:var(--ok)}.st.ok::before{background:var(--ok)}
+.st.warn{color:var(--warn)}.st.warn::before{background:var(--warn)}
+.st.bad{color:var(--bad)}.st.bad::before{background:var(--bad)}
+.st.wait::before{background:var(--accent);animation:p 1s infinite alternate}
+@keyframes p{to{opacity:.25}}
+.acts{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}
+.hint{font-size:13px;color:var(--quiet);margin-top:8px;line-height:1.7}
+.steps{margin:8px 0 0;padding-inline-start:20px;font-size:13px;color:var(--quiet);line-height:1.8}
+.foot{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.send{display:block;width:100%;max-width:528px;margin:0 auto;border:0;border-radius:8px;background:var(--brand);color:#fff;font-weight:800;font-size:18px;padding:14px;cursor:pointer}
+.send:disabled{opacity:.6}
+.msg{border-radius:var(--r);padding:14px 16px;margin-bottom:12px;font-size:15px;font-weight:600}
+.msg.ok{background:var(--ok-bg);color:var(--ok);border-inline-start:4px solid var(--ok)}
+.msg.bad{background:var(--bad-bg);color:var(--bad);border-inline-start:4px solid var(--bad)}
+.msg small{font-weight:400}
 .hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
-<header><h1>تسجيل مشروع تحت الإنشاء</h1><p>سمارتا — البحث الميداني</p></header>
+<header><div class="hw">
+  <div class="brand"><span class="logo">SMARTA</span><span class="co">سمارتا<br>البحث الميداني</span></div>
+  <h1>سجّل مشروع تحت الإنشاء</h1>
+  <p>صورة وموقع وحي. دقيقة وتخلص.</p>
+</div></header>
 <main>
   <div id="blocked" class="msg bad hidden">الرابط ناقص. افتح الرابط اللي وصلك من الإدارة زي ما هو.</div>
-  <div id="done" class="msg"></div>
+  <div id="done" class="msg hidden" role="status"></div>
 
   <form id="f" novalidate>
-    <div class="card">
-      <label class="t" for="name">اسمك</label>
-      <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم ثنائي" required>
-    </div>
+    <section class="card">
+      <div class="ch"><span class="num">1</span><h2><label for="name">اسمك</label></h2></div>
+      <div class="cb"><input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم ثنائي" required></div>
+    </section>
 
-    <div class="card">
-      <label class="t">صورة المشروع <small>(لحد 3 صور — يفضّل صورة للوحة المشروع)</small></label>
-      <input id="cam" type="file" accept="image/*" capture="environment" class="hidden">
-      <input id="gal" type="file" accept="image/*" multiple class="hidden">
-      <button type="button" class="btn" id="camBtn">📷 صوّر المشروع</button>
-      <div class="row" style="margin-top:8px;justify-content:center"><a href="#" id="galBtn">أو اختار من الصور</a></div>
-      <div class="photos" id="photos"></div>
-    </div>
-
-    <div class="card">
-      <label class="t">موقع المشروع</label>
-      <div class="row"><span id="gps" class="st">بنحدد موقعك…</span></div>
-      <div class="row" style="margin-top:6px;gap:14px"><a href="#" id="retry">حدّد الموقع تاني</a><a href="#" id="mapLnk" class="hidden" target="_blank" rel="noopener">شوفه على الخريطة</a><a href="#" id="altBtn">مش في الموقع؟</a></div>
-      <div class="alt" id="alt">
-        <input id="link" type="url" inputmode="url" placeholder="الصق رابط الموقع من جوجل ماب">
-        <div class="st">من جوجل ماب: اضغط مطوّل على مكان المشروع ← مشاركة ← نسخ الرابط.</div>
+    <section class="card">
+      <div class="ch"><span class="num">2</span><h2>صورة المشروع</h2><span class="opt">لحد 3 صور</span></div>
+      <div class="cb">
+        <input id="cam" type="file" accept="image/*" capture="environment" class="hidden">
+        <input id="gal" type="file" accept="image/*" multiple class="hidden">
+        <button type="button" class="btn" id="camBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span>صوّر المشروع</span></button>
+        <div class="acts" style="justify-content:center"><button type="button" class="lnk" id="galBtn">أو اختار من الصور</button></div>
+        <div class="photos" id="photos"></div>
+        <div class="hint">لو فيه لوحة للمشروع صوّرها، فيها اسم المالك والمقاول.</div>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <label class="t" for="district">الحي</label>
-      <select id="district" required><option value="">اختار الحي…</option></select>
-      <input id="other" type="text" maxlength="60" placeholder="اكتب اسم الحي" class="hidden" style="margin-top:8px">
-      <div class="st" id="dHint"></div>
-    </div>
+    <section class="card">
+      <div class="ch"><span class="num">3</span><h2>موقع المشروع</h2></div>
+      <div class="cb">
+        <div class="seg" role="group" aria-label="طريقة تحديد الموقع">
+          <button type="button" id="mGps" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7"/></svg>أنا في الموقع</button>
+          <button type="button" id="mLink" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>رابط جوجل ماب</button>
+        </div>
+        <div class="pane" id="pGps">
+          <div id="gps" class="st wait">بنحدد موقعك…</div>
+          <div class="acts"><button type="button" class="lnk" id="retry">حدّد الموقع تاني</button><a href="#" id="mapLnk" class="lnk hidden" target="_blank" rel="noopener">شوفه على الخريطة</a></div>
+        </div>
+        <div class="pane hidden" id="pLink">
+          <input id="link" type="url" inputmode="url" placeholder="الصق رابط الموقع هنا" autocomplete="off">
+          <div id="linkSt" class="st hidden" style="margin-top:8px"></div>
+          <ol class="steps"><li>افتح جوجل ماب واضغط مطوّل على مكان المشروع.</li><li>اختار «مشاركة» ثم «نسخ الرابط».</li><li>ارجع هنا والصقه.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="ch"><span class="num">4</span><h2><label for="district">الحي</label></h2></div>
+      <div class="cb">
+        <select id="district" required><option value="">اختار الحي…</option></select>
+        <input id="other" type="text" maxlength="60" placeholder="اكتب اسم الحي" class="hidden" style="margin-top:8px">
+        <div class="hint" id="dHint"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="ch"><span class="num">5</span><h2><label for="project">اسم المشروع</label></h2><span class="opt">اختياري</span></div>
+      <div class="cb">
+        <input id="project" type="text" maxlength="120" placeholder="مثلاً: فيلا سكنية">
+      </div>
+    </section>
   </form>
 </main>
-<div class="foot"><button class="btn main" id="send" form="f" type="submit">إرسال</button></div>
+<div class="foot"><button class="send" id="send" form="f" type="submit">إرسال</button></div>
 
 <script>
 /* ===== الإعداد: رابط الـ Web app من Google Apps Script */
@@ -92,14 +153,15 @@ const qs = new URLSearchParams(location.search);
 const KEY = qs.get('k') || '';
 const ls = { get(k){ try{return localStorage.getItem(k)}catch(e){return null} }, set(k,v){ try{localStorage.setItem(k,v)}catch(e){} } };
 const photos = [];      // dataURL مضغوطة
-let pos = null;         // {lat,lng,acc}
+let pos = null;         // {lat,lng,acc} من الـ GPS
 let watchId = null;
+let mode = 'gps';       // gps | link
 
 /* الحي */
 const sel = $('#district');
 DISTRICTS.forEach(d => sel.add(new Option(d, d)));
 sel.add(new Option('حي آخر…', '__other'));
-sel.onchange = () => $('#other').classList.toggle('hidden', sel.value !== '__other');
+sel.onchange = () => { $('#other').classList.toggle('hidden', sel.value !== '__other'); $('#dHint').textContent = ''; };
 const norm = s => String(s||'').replace(/^حي\s+/, '').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/^ال/, '').replace(/\s+/g,' ').trim();
 
 /* الاسم محفوظ على الموبايل */
@@ -108,11 +170,11 @@ if (!KEY) { $('#blocked').classList.remove('hidden'); $('#f').classList.add('hid
 
 /* الصور: ضغط لـ 1600 بكسل JPEG */
 $('#camBtn').onclick = () => $('#cam').click();
-$('#galBtn').onclick = e => { e.preventDefault(); $('#gal').click(); };
+$('#galBtn').onclick = () => $('#gal').click();
 $('#cam').onchange = $('#gal').onchange = async e => {
   for (const file of [...e.target.files]) {
-    if (photos.length >= 3) { alert('لحد 3 صور بس'); break; }
-    try { photos.push(await compress(file)); } catch (err) { alert('الصورة دي ما اتقريتش — جرّب تاني'); }
+    if (photos.length >= 3) { fail('لحد 3 صور بس'); break; }
+    try { photos.push(await compress(file)); } catch (err) { fail('الصورة دي ما اتقريتش، جرّب تاني'); }
   }
   e.target.value = ''; drawPhotos();
 };
@@ -130,49 +192,82 @@ function drawPhotos() {
   $('#photos').innerHTML = '';
   photos.forEach((p, i) => {
     const d = document.createElement('div'); const im = new Image(); im.src = p; im.alt = 'صورة ' + (i + 1);
-    const b = document.createElement('button'); b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'حذف الصورة');
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'حذف الصورة ' + (i + 1));
     b.onclick = () => { photos.splice(i, 1); drawPhotos(); };
     d.append(im, b); $('#photos').append(d);
   });
-  $('#camBtn').textContent = photos.length ? (photos.length < 3 ? '📷 صورة كمان' : 'تم (3 صور)') : '📷 صوّر المشروع';
+  $('#camBtn span').textContent = photos.length ? (photos.length < 3 ? 'صورة كمان' : 'تمام، 3 صور') : 'صوّر المشروع';
   $('#camBtn').disabled = photos.length >= 3;
 }
 
+/* طريقة الموقع */
+function setMode(m) {
+  mode = m;
+  $('#mGps').setAttribute('aria-pressed', m === 'gps'); $('#mLink').setAttribute('aria-pressed', m === 'link');
+  $('#pGps').classList.toggle('hidden', m !== 'gps'); $('#pLink').classList.toggle('hidden', m !== 'link');
+  if (m === 'gps' && !pos && watchId == null) locate();
+  if (m === 'link') { if (watchId != null) { navigator.geolocation.clearWatch(watchId); watchId = null; } setTimeout(() => $('#link').focus(), 50); }
+}
+$('#mGps').onclick = () => setMode('gps');
+$('#mLink').onclick = () => setMode('link');
+
 /* الموقع: أدق قراءة خلال 20 ثانية */
 function locate() {
-  if (!navigator.geolocation) { setGps('الموبايل ده مش بيدعم تحديد الموقع — الصق رابط جوجل ماب', 'bad'); showAlt(); return; }
+  if (!navigator.geolocation) { setGps('الموبايل ده مش بيدعم تحديد الموقع. استخدم رابط جوجل ماب', 'bad'); return; }
   if (watchId != null) navigator.geolocation.clearWatch(watchId);
-  setGps('بنحدد موقعك…', '');
+  setGps('بنحدد موقعك…', 'wait');
   const started = Date.now();
   watchId = navigator.geolocation.watchPosition(p => {
     const c = p.coords;
     if (!pos || c.accuracy < pos.acc) {
       pos = { lat: c.latitude, lng: c.longitude, acc: c.accuracy };
       const good = c.accuracy <= 50;
-      setGps((good ? '✓ الموقع اتحدد' : 'الموقع تقريبي') + ' — الدقة ' + Math.round(c.accuracy) + ' م', good ? 'ok' : 'warn');
+      setGps((good ? 'الموقع اتحدد' : 'الموقع تقريبي') + ' · الدقة ' + Math.round(c.accuracy) + ' متر', good ? 'ok' : 'warn');
       const a = $('#mapLnk'); a.href = 'https://www.google.com/maps?q=' + pos.lat + ',' + pos.lng; a.classList.remove('hidden');
-      if (!sel.value) guessDistrict();
+      if (!sel.value) guessDistrict(pos.lat, pos.lng);
     }
     if (pos.acc <= 20 || Date.now() - started > 20000) { navigator.geolocation.clearWatch(watchId); watchId = null; }
   }, err => {
-    const m = err.code === 1 ? 'إذن الموقع مقفول — اسمح للمتصفح بالموقع، أو الصق رابط جوجل ماب' : 'مش قادرين نحدد الموقع — اطلع مكان مفتوح واضغط «حدّد الموقع تاني»';
-    setGps(m, 'bad'); if (err.code === 1) showAlt();
+    watchId = null;
+    const m = err.code === 1 ? 'إذن الموقع مقفول. اسمح للمتصفح بالموقع، أو استخدم رابط جوجل ماب' : 'مش قادرين نحدد الموقع. اطلع مكان مفتوح واضغط «حدّد الموقع تاني»';
+    setGps(m, 'bad');
   }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 });
 }
 function setGps(t, cls) { const e = $('#gps'); e.textContent = t; e.className = 'st ' + (cls || ''); }
-function showAlt() { $('#alt').style.display = 'block'; }
-$('#retry').onclick = e => { e.preventDefault(); pos = null; locate(); };
-$('#altBtn').onclick = e => { e.preventDefault(); showAlt(); $('#link').focus(); };
+$('#retry').onclick = () => { pos = null; locate(); };
+
+/* رابط جوجل ماب */
+const MAPS_RE = /^https?:\/\/(?:[\w-]+\.)*(?:google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps|g\.co\/kgs)/i;
+function coordsIn(s) {
+  try { s = decodeURIComponent(s); } catch (e) {}
+  const pats = [/@(-?\d+\.\d+),(-?\d+\.\d+)/, /[?&](?:q|query|ll|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/, /!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/];
+  for (const re of pats) { const m = re.exec(s); if (m) return { lat: +m[1], lng: +m[2] }; }
+  return null;
+}
+function setLinkSt(t, cls) { const e = $('#linkSt'); e.textContent = t; e.className = 'st ' + (cls || ''); e.classList.toggle('hidden', !t); }
+function checkLink() {
+  const v = $('#link').value.trim();
+  if (!v) { setLinkSt(''); return false; }
+  const m = v.match(/https?:\/\/\S+/); const u = m ? m[0] : v;   // لو اتنسخ مع نص
+  if (u !== v) $('#link').value = u;
+  if (!MAPS_RE.test(u)) { setLinkSt('ده مش رابط جوجل ماب', 'bad'); return false; }
+  const c = coordsIn(u);
+  if (c) { setLinkSt('الرابط تمام', 'ok'); if (!sel.value) guessDistrict(c.lat, c.lng); }
+  else setLinkSt('الرابط تمام. الموقع بيتحدد بعد الإرسال', 'ok');
+  return true;
+}
+$('#link').addEventListener('input', checkLink);
+$('#link').addEventListener('paste', () => setTimeout(checkLink, 0));
 
 /* اقتراح الحي من الخريطة (OpenStreetMap) — الموظف بيأكّد */
-async function guessDistrict() {
+async function guessDistrict(lat, lng) {
   try {
-    const r = await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=16&accept-language=ar&lat=' + pos.lat + '&lon=' + pos.lng);
+    const r = await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=16&accept-language=ar&lat=' + lat + '&lon=' + lng);
     const a = (await r.json()).address || {};
     const cands = [a.suburb, a.neighbourhood, a.quarter, a.city_district, a.residential].filter(Boolean);
     for (const c of cands) {
       const hit = DISTRICTS.find(d => norm(d) === norm(c));
-      if (hit && !sel.value) { sel.value = hit; $('#dHint').textContent = 'اتحدد من الخريطة — غيّره لو غلط'; return; }
+      if (hit && !sel.value) { sel.value = hit; $('#dHint').textContent = 'اتحدد من الخريطة. غيّره لو غلط'; return; }
     }
   } catch (e) { /* مش مهم — الموظف يختار */ }
 }
@@ -182,29 +277,32 @@ $('#f').onsubmit = async e => {
   e.preventDefault();
   const name = $('#name').value.trim();
   const district = sel.value === '__other' ? $('#other').value.trim() : sel.value;
-  const link = $('#link').value.trim();
+  const project = $('#project').value.trim();
+  const link = mode === 'link' ? $('#link').value.trim() : '';
   if (!name) return fail('اكتب اسمك', '#name');
   if (!photos.length) return fail('صوّر المشروع الأول', '#camBtn');
-  if (!pos && !link) return fail('الموقع لسه ما اتحددش — استنى ثواني أو الصق رابط جوجل ماب', '#retry');
+  if (mode === 'gps' && !pos) return fail('الموقع لسه ما اتحددش. استنى ثواني، أو استخدم رابط جوجل ماب', '#retry');
+  if (mode === 'link' && !checkLink()) return fail('الصق رابط الموقع من جوجل ماب', '#link');
   if (!district) return fail('اختار الحي', '#district');
   ls.set('smarta_survey_name', name);
   const btn = $('#send'); btn.disabled = true; btn.textContent = 'بيتبعت…';
   try {
+    const gp = mode === 'gps' ? pos : null;
     const res = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ k: KEY, name, district, lat: pos ? pos.lat : null, lng: pos ? pos.lng : null, acc: pos ? pos.acc : null, link, photos }) });
+      body: JSON.stringify({ k: KEY, name, district, project, lat: gp ? gp.lat : null, lng: gp ? gp.lng : null, acc: gp ? gp.acc : null, link, photos }) });
     const out = await res.json();
     if (!out.ok) throw new Error(out.error || 'حصل خطأ');
-    done('✓ اتسجّل المشروع رقم ' + out.no + '. شكراً يا ' + name.split(' ')[0] + '!' + (out.duplicate ? '<br><small>ملحوظة: فيه مشروع متسجّل قريب من المكان ده (' + out.duplicate.replace(/[<>]/g, '') + ').</small>' : ''));
-    photos.length = 0; drawPhotos(); sel.value = ''; $('#other').value = ''; $('#other').classList.add('hidden'); $('#link').value = ''; $('#dHint').textContent = '';
-    pos = null; locate();
+    done('اتسجّل المشروع رقم ' + out.no + '. شكراً يا ' + name.split(' ')[0] + '!' + (out.duplicate ? '<br><small>ملحوظة: فيه مشروع متسجّل قريب من المكان ده (' + String(out.duplicate).replace(/[<>&]/g, '') + ').</small>' : ''));
+    photos.length = 0; drawPhotos(); sel.value = ''; $('#other').value = ''; $('#other').classList.add('hidden'); $('#link').value = ''; setLinkSt(''); $('#project').value = ''; $('#dHint').textContent = '';
+    pos = null; if (mode === 'gps') locate();
   } catch (err) {
-    fail((err && err.message && !/fetch|network|JSON/i.test(err.message)) ? err.message : 'الإرسال ما نجحش — اتأكد من النت وجرّب تاني. البيانات لسه موجودة.');
+    fail((err && err.message && !/fetch|network|JSON|Load failed/i.test(err.message)) ? err.message : 'الإرسال ما نجحش. اتأكد من النت وجرّب تاني، البيانات لسه موجودة.');
   } finally { btn.disabled = false; btn.textContent = 'إرسال'; }
 };
 function fail(t, focus) { const m = $('#done'); m.className = 'msg bad'; m.textContent = t; m.scrollIntoView({ block: 'center', behavior: 'smooth' }); if (focus) setTimeout(() => $(focus).focus(), 300); }
-function done(h) { const m = $('#done'); m.className = 'msg ok'; m.innerHTML = h + '<br><b>سجّل مشروع تاني ↓</b>'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function done(h) { const m = $('#done'); m.className = 'msg ok'; m.innerHTML = '✓ ' + h + '<br><b>سجّل مشروع تاني ↓</b>'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-$('#f').addEventListener('input', () => { const m = $('#done'); if (m.classList.contains('bad')) m.className = 'msg'; });
+$('#f').addEventListener('input', () => { const m = $('#done'); if (m.classList.contains('bad')) m.className = 'msg hidden'; });
 if (KEY) locate();
 </script>
 </body>
