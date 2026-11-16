@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f5c4d">
+<meta name="robots" content="noindex,nofollow">
+<title>سمارتا — البحث الميداني</title>
+<style>
+:root{--bg:#f4f6f5;--card:#fff;--ink:#16211e;--quiet:#5d6b67;--line:#dfe5e3;--brand:#0f5c4d;--brand-2:#e6f0ed;--ok:#1d7a46;--warn:#9a6400;--bad:#b3261e;--r:14px}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1513;--card:#18201d;--ink:#e8eeec;--quiet:#9aa8a3;--line:#2a3532;--brand:#4fb39b;--brand-2:#1d2d28;--ok:#5cc08a;--warn:#e0a948;--bad:#f08b83}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+header{background:var(--brand);color:#fff;padding:18px 16px 16px}
+header h1{margin:0;font-size:20px}
+header p{margin:4px 0 0;opacity:.85;font-size:14px}
+main{max-width:560px;margin:0 auto;padding:16px 16px 120px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
+label.t{display:block;font-weight:700;margin-bottom:8px}
+label.t small{font-weight:400;color:var(--quiet)}
+input[type=text],input[type=url],select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--brand);outline-offset:1px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font:inherit;font-weight:700;padding:14px;border-radius:12px;border:1px solid var(--brand);background:var(--brand-2);color:var(--brand);cursor:pointer}
+.btn.main{background:var(--brand);color:#fff;font-size:18px}
+.btn:disabled{opacity:.5}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.photos div{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg)}
+.photos img{width:100%;height:100%;object-fit:cover}
+.photos button{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:16px;line-height:28px}
+.st{font-size:14px;margin-top:8px;color:var(--quiet)}
+.st.ok{color:var(--ok)} .st.warn{color:var(--warn)} .st.bad{color:var(--bad)}
+.row{display:flex;gap:8px;align-items:center}
+.row a{color:var(--brand);font-size:14px;white-space:nowrap}
+.alt{margin-top:10px;display:none}
+.foot{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.foot .btn{max-width:528px;margin:0 auto}
+.msg{border-radius:var(--r);padding:16px;margin-bottom:12px;display:none}
+.msg.ok{display:block;background:var(--brand-2);border:1px solid var(--ok)}
+.msg.bad{display:block;background:var(--card);border:1px solid var(--bad);color:var(--bad)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header><h1>تسجيل مشروع تحت الإنشاء</h1><p>سمارتا — البحث الميداني</p></header>
+<main>
+  <div id="blocked" class="msg bad hidden">الرابط ناقص. افتح الرابط اللي وصلك من الإدارة زي ما هو.</div>
+  <div id="done" class="msg"></div>
+
+  <form id="f" novalidate>
+    <div class="card">
+      <label class="t" for="name">اسمك</label>
+      <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم ثنائي" required>
+    </div>
+
+    <div class="card">
+      <label class="t">صورة المشروع <small>(لحد 3 صور — يفضّل صورة للوحة المشروع)</small></label>
+      <input id="cam" type="file" accept="image/*" capture="environment" class="hidden">
+      <input id="gal" type="file" accept="image/*" multiple class="hidden">
+      <button type="button" class="btn" id="camBtn">📷 صوّر المشروع</button>
+      <div class="row" style="margin-top:8px;justify-content:center"><a href="#" id="galBtn">أو اختار من الصور</a></div>
+      <div class="photos" id="photos"></div>
+    </div>
+
+    <div class="card">
+      <label class="t">موقع المشروع</label>
+      <div class="row"><span id="gps" class="st">بنحدد موقعك…</span></div>
+      <div class="row" style="margin-top:6px;gap:14px"><a href="#" id="retry">حدّد الموقع تاني</a><a href="#" id="mapLnk" class="hidden" target="_blank" rel="noopener">شوفه على الخريطة</a><a href="#" id="altBtn">مش في الموقع؟</a></div>
+      <div class="alt" id="alt">
+        <input id="link" type="url" inputmode="url" placeholder="الصق رابط الموقع من جوجل ماب">
+        <div class="st">من جوجل ماب: اضغط مطوّل على مكان المشروع ← مشاركة ← نسخ الرابط.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <label class="t" for="district">الحي</label>
+      <select id="district" required><option value="">اختار الحي…</option></select>
+      <input id="other" type="text" maxlength="60" placeholder="اكتب اسم الحي" class="hidden" style="margin-top:8px">
+      <div class="st" id="dHint"></div>
+    </div>
+  </form>
+</main>
+<div class="foot"><button class="btn main" id="send" form="f" type="submit">إرسال</button></div>
+
+<script>
+/* ===== الإعداد: رابط الـ Web app من Google Apps Script */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTW087G86Ozwxx6E6HUAleVnktqDZsdPih2tUFA-DvED2RQqH5Qu_VdakkbHmP1O_e/exec';
+
+const DISTRICTS = ['الازدهار','إشبيلية','أم الحمام الشرقي','أم الحمام الغربي','البديعة','التعاون','الجزيرة','الجنادرية','الحزم','الحمراء','الخليج','الخير','الدار البيضاء','الدرعية','الربوة','الربيع','الرحمانية','الرائد','الرمال','الروابي','الروضة','الريان','الزهراء','السعادة','السلي','السليمانية','السويدي','السويدي الغربي','الشفا','الصحافة','الصفا','العارض','العريجاء','العريجاء الغربية','العزيزية','العقيق','العليا','الغدير','الفاروق','الفلاح','الفيحاء','القدس','القيروان','المروج','المرسلات','المصيف','المعذر','المعيزلية','الملز','الملقا','الملك عبدالعزيز','الملك عبدالله','الملك فهد','الملك فيصل','المنار','المهدية','المونسية','النخيل','الندى','النرجس','النزهة','النسيم','النظيم','النفل','النهضة','الواحة','الوادي','الورود','الياسمين','اليرموك','بدر','بنبان','حطين','ديراب','ظهرة لبن','ظهرة نمار','طويق','عرقة','عكاظ','غرناطة','قرطبة','لبن','نمار'];
+
+const $ = s => document.querySelector(s);
+const qs = new URLSearchParams(location.search);
+const KEY = qs.get('k') || '';
+const ls = { get(k){ try{return localStorage.getItem(k)}catch(e){return null} }, set(k,v){ try{localStorage.setItem(k,v)}catch(e){} } };
+const photos = [];      // dataURL مضغوطة
+let pos = null;         // {lat,lng,acc}
+let watchId = null;
+
+/* الحي */
+const sel = $('#district');
+DISTRICTS.forEach(d => sel.add(new Option(d, d)));
+sel.add(new Option('حي آخر…', '__other'));
+sel.onchange = () => $('#other').classList.toggle('hidden', sel.value !== '__other');
+const norm = s => String(s||'').replace(/^حي\s+/, '').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/^ال/, '').replace(/\s+/g,' ').trim();
+
+/* الاسم محفوظ على الموبايل */
+$('#name').value = ls.get('smarta_survey_name') || '';
+if (!KEY) { $('#blocked').classList.remove('hidden'); $('#f').classList.add('hidden'); $('#send').disabled = true; }
+
+/* الصور: ضغط لـ 1600 بكسل JPEG */
+$('#camBtn').onclick = () => $('#cam').click();
+$('#galBtn').onclick = e => { e.preventDefault(); $('#gal').click(); };
+$('#cam').onchange = $('#gal').onchange = async e => {
+  for (const file of [...e.target.files]) {
+    if (photos.length >= 3) { alert('لحد 3 صور بس'); break; }
+    try { photos.push(await compress(file)); } catch (err) { alert('الصورة دي ما اتقريتش — جرّب تاني'); }
+  }
+  e.target.value = ''; drawPhotos();
+};
+async function compress(file) {
+  const max = 1600;
+  let src;
+  try { src = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) { src = await new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = URL.createObjectURL(file); }); }
+  const w = src.width, h = src.height, s = Math.min(1, max / Math.max(w, h));
+  const c = document.createElement('canvas'); c.width = Math.round(w * s); c.height = Math.round(h * s);
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  return c.toDataURL('image/jpeg', 0.78);
+}
+function drawPhotos() {
+  $('#photos').innerHTML = '';
+  photos.forEach((p, i) => {
+    const d = document.createElement('div'); const im = new Image(); im.src = p; im.alt = 'صورة ' + (i + 1);
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'حذف الصورة');
+    b.onclick = () => { photos.splice(i, 1); drawPhotos(); };
+    d.append(im, b); $('#photos').append(d);
+  });
+  $('#camBtn').textContent = photos.length ? (photos.length < 3 ? '📷 صورة كمان' : 'تم (3 صور)') : '📷 صوّر المشروع';
+  $('#camBtn').disabled = photos.length >= 3;
+}
+
+/* الموقع: أدق قراءة خلال 20 ثانية */
+function locate() {
+  if (!navigator.geolocation) { setGps('الموبايل ده مش بيدعم تحديد الموقع — الصق رابط جوجل ماب', 'bad'); showAlt(); return; }
+  if (watchId != null) navigator.geolocation.clearWatch(watchId);
+  setGps('بنحدد موقعك…', '');
+  const started = Date.now();
+  watchId = navigator.geolocation.watchPosition(p => {
+    const c = p.coords;
+    if (!pos || c.accuracy < pos.acc) {
+      pos = { lat: c.latitude, lng: c.longitude, acc: c.accuracy };
+      const good = c.accuracy <= 50;
+      setGps((good ? '✓ الموقع اتحدد' : 'الموقع تقريبي') + ' — الدقة ' + Math.round(c.accuracy) + ' م', good ? 'ok' : 'warn');
+      const a = $('#mapLnk'); a.href = 'https://www.google.com/maps?q=' + pos.lat + ',' + pos.lng; a.classList.remove('hidden');
+      if (!sel.value) guessDistrict();
+    }
+    if (pos.acc <= 20 || Date.now() - started > 20000) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+  }, err => {
+    const m = err.code === 1 ? 'إذن الموقع مقفول — اسمح للمتصفح بالموقع، أو الصق رابط جوجل ماب' : 'مش قادرين نحدد الموقع — اطلع مكان مفتوح واضغط «حدّد الموقع تاني»';
+    setGps(m, 'bad'); if (err.code === 1) showAlt();
+  }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 });
+}
+function setGps(t, cls) { const e = $('#gps'); e.textContent = t; e.className = 'st ' + (cls || ''); }
+function showAlt() { $('#alt').style.display = 'block'; }
+$('#retry').onclick = e => { e.preventDefault(); pos = null; locate(); };
+$('#altBtn').onclick = e => { e.preventDefault(); showAlt(); $('#link').focus(); };
+
+/* اقتراح الحي من الخريطة (OpenStreetMap) — الموظف بيأكّد */
+async function guessDistrict() {
+  try {
+    const r = await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=16&accept-language=ar&lat=' + pos.lat + '&lon=' + pos.lng);
+    const a = (await r.json()).address || {};
+    const cands = [a.suburb, a.neighbourhood, a.quarter, a.city_district, a.residential].filter(Boolean);
+    for (const c of cands) {
+      const hit = DISTRICTS.find(d => norm(d) === norm(c));
+      if (hit && !sel.value) { sel.value = hit; $('#dHint').textContent = 'اتحدد من الخريطة — غيّره لو غلط'; return; }
+    }
+  } catch (e) { /* مش مهم — الموظف يختار */ }
+}
+
+/* الإرسال */
+$('#f').onsubmit = async e => {
+  e.preventDefault();
+  const name = $('#name').value.trim();
+  const district = sel.value === '__other' ? $('#other').value.trim() : sel.value;
+  const link = $('#link').value.trim();
+  if (!name) return fail('اكتب اسمك', '#name');
+  if (!photos.length) return fail('صوّر المشروع الأول', '#camBtn');
+  if (!pos && !link) return fail('الموقع لسه ما اتحددش — استنى ثواني أو الصق رابط جوجل ماب', '#retry');
+  if (!district) return fail('اختار الحي', '#district');
+  ls.set('smarta_survey_name', name);
+  const btn = $('#send'); btn.disabled = true; btn.textContent = 'بيتبعت…';
+  try {
+    const res = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ k: KEY, name, district, lat: pos ? pos.lat : null, lng: pos ? pos.lng : null, acc: pos ? pos.acc : null, link, photos }) });
+    const out = await res.json();
+    if (!out.ok) throw new Error(out.error || 'حصل خطأ');
+    done('✓ اتسجّل المشروع رقم ' + out.no + '. شكراً يا ' + name.split(' ')[0] + '!' + (out.duplicate ? '<br><small>ملحوظة: فيه مشروع متسجّل قريب من المكان ده (' + out.duplicate.replace(/[<>]/g, '') + ').</small>' : ''));
+    photos.length = 0; drawPhotos(); sel.value = ''; $('#other').value = ''; $('#other').classList.add('hidden'); $('#link').value = ''; $('#dHint').textContent = '';
+    pos = null; locate();
+  } catch (err) {
+    fail((err && err.message && !/fetch|network|JSON/i.test(err.message)) ? err.message : 'الإرسال ما نجحش — اتأكد من النت وجرّب تاني. البيانات لسه موجودة.');
+  } finally { btn.disabled = false; btn.textContent = 'إرسال'; }
+};
+function fail(t, focus) { const m = $('#done'); m.className = 'msg bad'; m.textContent = t; m.scrollIntoView({ block: 'center', behavior: 'smooth' }); if (focus) setTimeout(() => $(focus).focus(), 300); }
+function done(h) { const m = $('#done'); m.className = 'msg ok'; m.innerHTML = h + '<br><b>سجّل مشروع تاني ↓</b>'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+$('#f').addEventListener('input', () => { const m = $('#done'); if (m.classList.contains('bad')) m.className = 'msg'; });
+if (KEY) locate();
+</script>
+</body>
+</html>
